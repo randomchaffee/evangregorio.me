@@ -2,31 +2,24 @@
 
 ## Project Overview
 
-This project documents my first successful deployment of a FastAPI application on an AWS EC2 instance running Ubuntu 24.04.
+This project is a FastAPI backend deployed on an **AWS EC2** instance running Ubuntu 24.04 and connected to a **PostgreSQL** database.  
+I'm working on this as a prototype for a future big project and for learning **cloud deployment**, **backend development**, and **database integration**.
 
-The goal was to:
-
-- Launch and configure an EC2 instance
-- Connect via SSH
-- Set up Python properly (handling Ubuntu 24 restrictions)
-- Create and activate a virtual environment
-- Install FastAPI and Uvicorn
-- Configure AWS Security Groups
-- Deploy a live API accessible from the browser
-- Manage background processes using screen
-- This repository documents both the setup and the challenges encountered.
+Currently in early early experimentation phase.
 
 ## Tech Stack
 - AWS EC2
 - Ubuntu 24.04 LTS
 - Python 3.12
+- PostgreSQL 16+
+- SQLAlchemy
 - FastAPI
 - Uvicorn
-- Linux (SSH, process management)
-- screen (for background execution)
+- Ubuntu Linux (SSH, process management)
 
-## Outcome 
-Outcome
-Successfully deployed a live FastAPI API on AWS EC2, configured networking and security rules, and managed background services properly.
+## Preview
 
-This is my first complete cloud backend deployment from scratch.
+> March 04, 2026 20:44
+> 
+> Deployment of a live FastAPI API connected to a PostgreSQL database on an AWS EC2 instance (ts aint local anymore twin)
+<img width="500" height="450" alt="image" src="https://github.com/user-attachments/assets/a81a5ad0-88f0-4ca7-bfbc-7fc12c954342" />
