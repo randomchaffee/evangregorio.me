@@ -1,20 +1,34 @@
-from fastapi import FastAPI
-<<<<<<< HEAD
+from fastapi import FastAPI, Depends
+from sqlalchemy.orm import Session
 
-app = FastAPI()
-
-@app.get("/")
-def read_root():
-    return {"message": "Hello from FastAPI on AWS!"}
-=======
-from .database import engine
-from .models import Base
+from .database import engine, SessionLocal
+from .models import Base, User
 
 app = FastAPI()
 
 Base.metadata.create_all(bind=engine)
 
+def get_db():
+	db = SessionLocal()
+	try:
+		yield db
+	finally:
+		db.close()
+
 @app.get("/")
 def read_root():
 	return {"message": "Hello from FastAPI on AWS!"}
->>>>>>> 2e7469f (Connected -m Connected FastAPI to PostgreSQL on AWS EC2)
+
+
+@app.post("/users")
+def create_user(name: str, email: str, db: Session = Depends(get_db)):
+	user = User(name=name, email=email)
+	db.add(user)
+	db.commit()
+	db.refresh(user)
+	return user
+
+@app.get("/users")
+def get_users(db: Session = Depends(get_db)):
+	users = db.query(User).all()
+	return users
