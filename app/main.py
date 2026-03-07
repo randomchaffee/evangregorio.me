@@ -21,9 +21,7 @@ def read_root():
 		"message": (
 			"Hi! You've entered Evan Gregorio's personal web domain. "
 			"It may be barren right now, but soon he will be releasing "
-			"some really cool stuff! For the meantime, you can check out "
-			"evangregorio.me/docs for a basic API he made using Python "
-			"and PostgreSQL, deployed on AWS EC2. Thanks for visiting my page!"
+			"some really cool stuff! "
         	)
 	    }
 
