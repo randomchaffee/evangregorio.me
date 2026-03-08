@@ -141,8 +141,8 @@ jobs:
               exit 1
             fi
 
-            $DC up -d --build
-            $DC ps
+            $DC -f docker-compose.yml -f docker-compose.production.yml up -d --build
+            $DC -f docker-compose.yml -f docker-compose.production.yml ps
 
             FRONTEND_SRC="$REPO_DIR/evangregorio.me/"
             if [ ! -d "$FRONTEND_SRC" ]; then
