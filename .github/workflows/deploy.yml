@@ -86,6 +86,27 @@ jobs:
             sudo nginx -t
             sudo systemctl reload nginx
 
+            wait_for_url() {
+              url="$1"
+              label="$2"
+              attempts=20
+              sleep_seconds=3
+
+              for i in $(seq 1 "$attempts"); do
+                echo "[$i/$attempts] probing $label: $url"
+                if curl --silent --show-error --fail \
+                  --connect-timeout 3 --max-time 8 \
+                  "$url" >/dev/null; then
+                  echo "$label is healthy: $url"
+                  return 0
+                fi
+                sleep "$sleep_seconds"
+              done
+
+              echo "$label health check failed after $attempts attempts: $url"
+              return 1
+            }
+
   deploy-production:
     name: Deploy Production
     runs-on: ubuntu-latest
@@ -155,3 +176,24 @@ jobs:
 
             sudo nginx -t
             sudo systemctl reload nginx
+
+            wait_for_url() {
+              url="$1"
+              label="$2"
+              attempts=20
+              sleep_seconds=3
+
+              for i in $(seq 1 "$attempts"); do
+                echo "[$i/$attempts] probing $label: $url"
+                if curl --silent --show-error --fail \
+                  --connect-timeout 3 --max-time 8 \
+                  "$url" >/dev/null; then
+                  echo "$label is healthy: $url"
+                  return 0
+                fi
+                sleep "$sleep_seconds"
+              done
+
+              echo "$label health check failed after $attempts attempts: $url"
+              return 1
+            }
