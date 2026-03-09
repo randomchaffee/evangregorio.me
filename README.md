@@ -4,8 +4,8 @@ Personal full-stack web platform running on AWS EC2 with a containerized FastAPI
 
 ## Live Endpoints
 
-- Root site: `https://evangregorio.me`
-- API docs (Swagger): `https://api.evangregorio.me/docs`
+- Root site: https://evangregorio.me
+- API docs (Swagger): https://api.evangregorio.me/docs
 
 ## Project Scope
 
