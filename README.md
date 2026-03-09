@@ -25,8 +25,6 @@ This repository includes:
 ![Docker](https://img.shields.io/badge/docker-containerized-blue)
 ![AWS](https://img.shields.io/badge/AWS-EC2-orange)
 
-## Tech Stack
-
 ### Backend
 - Python 3.12
 - FastAPI
