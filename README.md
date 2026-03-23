@@ -2,11 +2,13 @@
 ![Python](https://img.shields.io/badge/python-3.12-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-API-green)
 ![Docker](https://img.shields.io/badge/docker-containerized-blue)
-![AWS](https://img.shields.io/badge/AWS-EC2-orange)
+![DigitalOcean](https://img.shields.io/badge/DigitalOcean-Droplet-blue)
 ![Last Commit](https://img.shields.io/github/last-commit/ecgregorio/evangregorio.me)
 ![Repo Size](https://img.shields.io/github/repo-size/ecgregorio/evangregorio.me)
 
-Personal full-stack web platform running on AWS EC2 with a containerized FastAPI backend, PostgreSQL, Nginx reverse proxy, HTTPS via Certbot, and GitHub Actions CI/CD.
+Personal full-stack web platform running on a DigitalOcean Droplet with a containerized FastAPI backend, PostgreSQL, Nginx reverse proxy, HTTPS via Certbot, and GitHub Actions CI/CD.
+
+Originally hosted on AWS EC2, this project was later migrated to DigitalOcean for the current production/staging setup.
 
 ## Live Endpoints
 
@@ -37,7 +39,7 @@ This repository includes:
 - PostgreSQL 16+
 
 ### Infrastructure
-- AWS EC2 (Ubuntu 24.04)
+- DigitalOcean Droplet (Ubuntu 24.04)
 - Docker + Docker Compose
 - Nginx reverse proxy
 - Certbot (Let's Encrypt HTTPS)
@@ -63,13 +65,13 @@ PostgreSQL container
 <img width="500" height="450" alt="image" src="https://github.com/user-attachments/assets/a81a5ad0-88f0-4ca7-bfbc-7fc12c954342" />
 
 > March 07, 23:29
-> Containers running on the EC2 server via Docker Compose
+> Containers running on the server via Docker Compose
 <img width="1779" height="128" alt="image" src="https://github.com/user-attachments/assets/471d7ceb-cf0f-41cb-a11d-54b8d48d1e59" />
 
 ## Deployment Automation
 
 - Pushes to `main` trigger GitHub Actions deployment.
-- Backend deploy uses `docker compose up -d --build` on EC2.
+- Backend deploy uses Docker Compose over SSH on the Droplet.
 - Root website files from `evangregorio.me/` are synced to `/var/www/evangregorio.me`.
 - Nginx config is tested (`nginx -t`) and reloaded after sync.
 - Legacy systemd-only deploy flow is deprecated for this repo.
@@ -80,7 +82,8 @@ PostgreSQL container
 - Branch: `main`
 - API URL: `https://api.evangregorio.me`
 - Root URL: `https://evangregorio.me`
-- Compose: `docker-compose.yml` +  + `docker-compose.production.yml`
+- Compose: `docker-compose.yml` + `docker-compose.production.yml`
+- Compose project: `prod`
 - API host port: `8000`
 
 ### Staging
@@ -88,6 +91,7 @@ PostgreSQL container
 - API URL: `https://staging-api.evangregorio.me`
 - Root URL: `https://staging.evangregorio.me`
 - Compose: `docker-compose.yml` + `docker-compose.staging.yml`
+- Compose project: `staging`
 - API host port: `8001`
 
 ## CI/CD Behavior
@@ -95,11 +99,13 @@ PostgreSQL container
 - Push to staging deploys staging.
 - Manual deploy is available via workflow_dispatch.
 - Deployment flow:
-    - Pull latest branch on EC2
+   - Pull latest branch on Droplet
     - Rebuild/restart Docker services
     - Sync frontend files to Nginx web root
     - Validate Nginx config and reload
     - Run health checks
+
+Note: workflow secret names still use the `EC2_*` prefix for compatibility, but values now point to the DigitalOcean host.
 
 ## Project Structure
 
@@ -113,5 +119,5 @@ PostgreSQL container
 
 - The root domain is served by Nginx from /var/www/evangregorio.me.
 - FastAPI / route is API scope, not the static root website.
-- On t3.micro, production should stay always-on; staging is best run on-demand to avoid memory pressure.
-- Container worker counts should stay conservative on micro instances (froze my instance one time).
+- On small Droplets, production should stay always-on; staging is best run on-demand to avoid memory pressure.
+- Container worker counts should stay conservative on small instances (froze my instance one time).
