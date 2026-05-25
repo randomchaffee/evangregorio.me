@@ -1,0 +1,27 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const featured = (await getCollection("projects"))
+	.filter((p) => p.data.featured)
+	.slice(0, 2)
+---
+
+<Layout
+  title="Evan Gregorio | Home"
+  description="Portfolio of Evan Gregorio — UPLB CS, projects, and writing."
+>
+  <section class="hero">
+    <p class="eyebrow">// home</p>
+    <h1>Hi, I'm Evan.</h1>
+    <p class="hero-lead">
+      2nd year Computer Science at UPLB. I build software for fun—backend,
+      cloud, and whatever I'm curious about. This site is my space for projects
+      and blog posts.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="/projects">Projects</a>
+      <a class="btn" href="/blog">Blog</a>
+    </div>
+  </section>
+</Layout>

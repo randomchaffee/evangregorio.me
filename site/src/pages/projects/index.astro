@@ -1,0 +1,46 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const projects = (await getCollection("projects")).sort(
+  (a, b) => b.data.year - a.data.year
+);
+---
+
+<Layout
+  title="Projects | Evan Gregorio"
+  description="Selected projects — backend, cloud, and tools."
+>
+  <header class="page-header">
+    <p class="eyebrow">// projects</p>
+    <h1>Projects</h1>
+    <p class="page-lead">Things I've built and shipped.</p>
+  </header>
+
+  <ul class="project-grid">
+    {
+      projects.map((project) => (
+        <li>
+          <article class="project-card">
+            {project.data.featured && (
+              <p class="project-badge">Featured</p>
+            )}
+            <h2>
+              <a href={`/projects/${project.id}`}>{project.data.title}</a>
+            </h2>
+            <p class="project-meta">{project.data.year}</p>
+            <p class="project-summary">
+              {project.data.summary ??
+                (project.body ? `${project.body.slice(0, 160)}…` : "")}
+            </p>
+            <ul class="tag-list">
+              {project.data.tags.map((tag) => (
+                <li>{tag}</li>
+              ))}
+            </ul>
+          </article>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>
